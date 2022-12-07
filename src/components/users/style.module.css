@@ -4,4 +4,5 @@ thead tr {
 
 .wrapper {
     margin: 10px;
+    display: flex;
 }

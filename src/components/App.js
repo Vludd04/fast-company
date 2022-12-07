@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import SearchStatus from "./searchStatus/searchStatus";
+import React, { useEffect, useState } from "react";
 import api from "../api";
 import Users from "./users/users";
 
 function App() {
-    const [users, setUsers] = useState(api.users.fetchAll());
+    const [users, setUsers] = useState();
+
+    useEffect(() => {
+        api.users.fetchAll().then((data) => setUsers(data));
+    }, []);
 
     const handleChangeBookmarkStatus = (id) => {
         const newStatus = users.map((user) => {
@@ -20,12 +23,15 @@ function App() {
     };
     return (
         <>
-            <SearchStatus length={users.length} />
-            <Users
-                users={users}
-                onDelete={handleDelete}
-                handleChangeBookmarkStatus={handleChangeBookmarkStatus}
-            />
+            {users ? (
+                <Users
+                    users={users}
+                    onDelete={handleDelete}
+                    handleChangeBookmarkStatus={handleChangeBookmarkStatus}
+                />
+            ) : (
+                " loading..."
+            )}
         </>
     );
 }
