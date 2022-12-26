@@ -18,12 +18,12 @@ const User = ({ match, history }) => {
         return (
             <>
                 <h2>{user.name}</h2>
-                <h3>Профессия: {user.profession.name}</h3>
-                <h3>
+                <h4>Профессия: {user.profession.name}</h4>
+                <h4>
                     <QualitiesList qualities={user.qualities} />
-                </h3>
-                <h3>Встретился раз: {user.completedMeetings}</h3>
-                <h3>Рейтинг: {user.rate}</h3>
+                </h4>
+                <h4>Встретился раз: {user.completedMeetings}</h4>
+                <h4>Рейтинг: {user.rate}</h4>
 
                 <button
                     onClick={() => {
