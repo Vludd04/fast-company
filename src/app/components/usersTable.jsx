@@ -12,7 +12,11 @@ const UserTable = ({
     onDelete
 }) => {
     const columns = {
-        name: { path: "name", name: "Имя ", sortStatus: "иконка" },
+        name: {
+            path: "name",
+            name: "Имя ",
+            sortStatus: "иконка"
+        },
         qualities: {
             name: "Качества",
             component: (user) => <QualitiesList qualities={user.qualities} />
