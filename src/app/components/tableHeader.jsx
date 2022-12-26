@@ -35,7 +35,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                             ) : (
                                 <i className="bi bi-caret-up-fill"></i>
                             )
-                        ) : undefined}
+                        ) : null}
                     </th>
                 ))}
             </tr>
