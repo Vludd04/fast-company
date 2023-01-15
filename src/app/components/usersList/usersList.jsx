@@ -16,12 +16,17 @@ const UsersList = () => {
     const pageSize = 4;
 
     const [users, setUsers] = useState();
+
+    const [search, setSearch] = useState("");
+
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
+
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
     };
+
     const handleToggleBookMark = (id) => {
         setUsers(
             users.map((user) => {
@@ -36,12 +41,19 @@ const UsersList = () => {
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
+
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, search]);
 
     const handleProfessionSelect = (item) => {
+        if (search !== "") setSearch("");
         setSelectedProf(item);
+    };
+
+    const handleSearch = ({ target }) => {
+        setSelectedProf(null);
+        setSearch(target.value);
     };
 
     const handlePageChange = (pageIndex) => {
@@ -53,13 +65,19 @@ const UsersList = () => {
     };
 
     if (users) {
-        const filteredUsers = selectedProf
-            ? users.filter(
-                  (user) =>
-                      JSON.stringify(user.profession) ===
-                      JSON.stringify(selectedProf)
-              )
-            : users;
+        let filteredUsers = users;
+
+        if (selectedProf) {
+            filteredUsers = users.filter(
+                (user) =>
+                    JSON.stringify(user.profession) ===
+                    JSON.stringify(selectedProf)
+            );
+        } else if (search) {
+            filteredUsers = users.filter((user) =>
+                user.name.toLowerCase().includes(search.toLowerCase())
+            );
+        }
 
         const count = filteredUsers.length;
         const sortedUsers = _.orderBy(
@@ -92,6 +110,13 @@ const UsersList = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search..."
+                        value={search}
+                        onChange={handleSearch}
+                    />
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
