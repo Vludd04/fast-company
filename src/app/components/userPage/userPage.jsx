@@ -22,7 +22,7 @@ const UserPage = ({ userId }) => {
                 <h4>
                     <QualitiesList qualities={user.qualities} />
                 </h4>
-                <h4>Встретился раз: {user.completedMeetings}</h4>
+                <h4>Встретился, раз: {user.completedMeetings}</h4>
                 <h4>Рейтинг: {user.rate}</h4>
                 <button
                     onClick={() => {
