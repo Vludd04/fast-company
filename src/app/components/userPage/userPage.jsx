@@ -34,7 +34,7 @@ const UserPage = ({ userId }) => {
             </>
         );
     }
-    return "loading.. ";
+    return "loading... ";
 };
 
 UserPage.propTypes = {
