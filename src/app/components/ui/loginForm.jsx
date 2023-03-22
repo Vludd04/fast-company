@@ -14,36 +14,25 @@ const LoginForm = () => {
     const history = useHistory();
     const { logIn } = useAuth();
     const [errors, setErrors] = useState({});
+    const [enterError, setEnterError] = useState(null);
 
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
+        setEnterError(null);
     };
 
     const validatorConfig = {
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
-            },
-            isEmail: {
-                message: "Email введен некорректно"
             }
         },
         password: {
             isRequired: {
                 message: "Пароль обязателен для заполнения"
-            },
-            isCapitalSybmol: {
-                message: "Пароль должен содержать хотя бы одну заглавную букву"
-            },
-            isContainDigit: {
-                message: "Пароль должен содержать хотя бы одну цифру"
-            },
-            min: {
-                message: "Пароль должен состоять минимум из 8 символов",
-                value: 8
             }
         }
     };
@@ -67,9 +56,13 @@ const LoginForm = () => {
 
         try {
             await logIn(data);
-            history.push("/");
+            history.push(
+                history.location.state
+                    ? history.location.state.from.pathname
+                    : "/"
+            );
         } catch (error) {
-            setErrors(error);
+            setEnterError(error.message);
         }
     };
 
@@ -99,9 +92,10 @@ const LoginForm = () => {
             >
                 Оставаться в системе
             </CheckBoxField>
+            {enterError && <p className="text-danger">{enterError}</p>}
             <button
                 type="submit"
-                disabled={!isValid}
+                disabled={!isValid || enterError}
                 className="btn btn-primary w-100 mx-auto"
             >
                 Submit
