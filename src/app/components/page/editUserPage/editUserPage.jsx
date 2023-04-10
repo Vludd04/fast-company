@@ -7,8 +7,12 @@ import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
 import { useAuth } from "../../../hooks/useAuth";
-import { useProfession } from "../../../hooks/useProfession";
-import { useQualities } from "../../../hooks/useQualities";
+import { useSelector } from "react-redux";
+import {
+    getQualities,
+    getQualitiesLoadingStatus
+} from "../../../store/qualities";
+import { getProfessions } from "../../../store/professions";
 
 const EditUserPage = () => {
     const history = useHistory();
@@ -16,10 +20,10 @@ const EditUserPage = () => {
     const { currentUser, updateUser } = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [errors, setErrors] = useState({});
-
-    const { professions, isLoading: isProfessionsLoading } = useProfession();
-
-    const { qualities, isLoading: isQualititesLoading } = useQualities();
+    const professions = useSelector(getProfessions());
+    const qualities = useSelector(getQualities());
+    const isQualitiesLoading = useSelector(getQualitiesLoadingStatus());
+    const isProfessionsLoading = useSelector(getQualitiesLoadingStatus());
 
     function getUserQualitiesById(qualitiesIds) {
         const userQualitites = [];
@@ -74,7 +78,7 @@ const EditUserPage = () => {
     useEffect(() => {
         if (
             !isProfessionsLoading &&
-            !isQualititesLoading &&
+            !isQualitiesLoading &&
             currentUser &&
             !data
         ) {
@@ -83,7 +87,7 @@ const EditUserPage = () => {
                 qualities: getUserQualitiesById(currentUser.qualities)
             });
         }
-    }, [isProfessionsLoading, isQualititesLoading, currentUser, data]);
+    }, [isProfessionsLoading, isQualitiesLoading, currentUser, data]);
 
     useEffect(() => {
         if (data && isLoading) {
