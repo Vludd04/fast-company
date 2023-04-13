@@ -14,6 +14,7 @@ export const httpAuth = axios.create({
         key: process.env.REACT_APP_FIREBASE_KEY
     }
 });
+
 const AuthContext = React.createContext();
 
 export const useAuth = () => {
