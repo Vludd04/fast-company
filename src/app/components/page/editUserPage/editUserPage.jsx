@@ -6,18 +6,18 @@ import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useAuth } from "../../../hooks/useAuth";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     getQualities,
     getQualitiesLoadingStatus
 } from "../../../store/qualities";
 import { getProfessions } from "../../../store/professions";
+import { getCurrentUserData, updateUser } from "../../../store/users";
 
 const EditUserPage = () => {
-    const history = useHistory();
+    const dispatch = useDispatch();
     const [data, setData] = useState();
-    const { currentUser, updateUser } = useAuth();
+    const currentUser = useSelector(getCurrentUserData());
     const [isLoading, setIsLoading] = useState(true);
     const [errors, setErrors] = useState({});
     const professions = useSelector(getProfessions());
@@ -71,8 +71,7 @@ const EditUserPage = () => {
             qualities: getQualitiesIds(qualities)
         };
 
-        await updateUser(newData);
-        history.push(`/users/${currentUser._id}`);
+        dispatch(updateUser(newData));
     };
 
     useEffect(() => {
