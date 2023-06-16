@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "67rdca3eeb7f6fgeed471198",
+    "name": "Honest",
+    "color": "primary"
+  },
+  {
+    "_id": "67rdca3eeb7f6fgeed471100",
+    "name": "Loyal",
+    "color": "secondary"
+  },
+  {
+    "_id": "67rdca3eeb7f6fgeed4711012",
+    "name": "Kind",
+    "color": "success"
+  },
+  {
+    "_id": "67rdca3eeb7f6fgeed471101",
+    "name": "Friendly",
+    "color": "danger"
+  },
+  {
+    "_id": "67rdca3eeb7f6fgeed471102",
+    "name": "Handsome",
+    "color": "info"
+  },
+  {
+    "_id": "67rdca3eeb7f6fgeed471103",
+    "name": "Reliable",
+    "color": "dark"
+  }
+]
